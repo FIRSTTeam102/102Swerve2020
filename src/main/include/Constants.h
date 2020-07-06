@@ -16,3 +16,26 @@
  * command-specific namespaces within this header, which can then be used where
  * they are needed.
  */
+
+// Motor Ports
+
+const int kFLDrive = 0;
+const int kFLTurn = 1;
+const int kFRDrive = 2;
+const int kFRTurn = 3;
+const int kBRDrive = 4;
+const int kBRTurn = 5;
+const int kBLDrive = 6;
+const int kBLTurn = 7;
+
+
+// Encoder Ports
+
+const int kFLEncA = 0;
+const int kFLEncB = 1;
+const int kFREncA = 2;
+const int kFREncB = 3;
+const int kBREncA = 4;
+const int kBREncB = 5;
+const int kBLEncA = 6;
+const int kBLEncB = 7;

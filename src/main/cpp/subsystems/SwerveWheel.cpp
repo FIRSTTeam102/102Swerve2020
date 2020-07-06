@@ -5,12 +5,11 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "subsystems/ExampleSubsystem.h"
+#include "subsystems/SwerveWheel.h"
 
-ExampleSubsystem::ExampleSubsystem() {
-  // Implementation of subsystem constructor goes here.
+SwerveWheel::SwerveWheel(int drivePort, int turnPort, int encAPort, int encBPort) : mDriveMotor{drivePort}, mTurnMotor{turnPort}, mEnc{encAPort, encBPort} {
+    
 }
 
-void ExampleSubsystem::Periodic() {
-  // Implementation of subsystem periodic method goes here.
-}
+// This method will be called once per scheduler run
+void SwerveWheel::Periodic() {}

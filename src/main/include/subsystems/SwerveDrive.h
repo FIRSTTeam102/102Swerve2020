@@ -8,17 +8,30 @@
 #pragma once
 
 #include <frc2/command/SubsystemBase.h>
+#include <frc/XboxController.h>
 
-class ExampleSubsystem : public frc2::SubsystemBase {
+#include "subsystems/SwerveWheel.h"
+#include "Constants.h"
+
+class SwerveDrive : public frc2::SubsystemBase {
  public:
-  ExampleSubsystem();
+  SwerveDrive();
+  void setController(frc::XboxController *pDriverController) {
+    mpDriverController = pDriverController;
+  }
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */
-  void Periodic() override;
+  void Periodic();
 
  private:
+  frc::XboxController *mpDriverController;
+
+  SwerveWheel mWheelFL{kFLDrive, kFLTurn, kFLEncA, kFLEncB};
+  SwerveWheel mWheelFR{kFRDrive, kFRTurn, kFREncA, kFREncB};
+  SwerveWheel mWheelBR{kBRDrive, kBRTurn, kBREncA, kBREncB};
+  SwerveWheel mWheelBL{kBLDrive, kBLTurn, kBLEncA, kBLEncB};
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
 };
