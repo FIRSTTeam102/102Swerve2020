@@ -39,3 +39,13 @@ const int kBREncA = 4;
 const int kBREncB = 5;
 const int kBLEncA = 6;
 const int kBLEncB = 7;
+
+
+// Calibration Values
+
+const int kFLAngleScale = 360;
+const int kFRAngleScale = 360;
+const int kBRAngleScale = 360;
+const int kBLAngleScale = 360;
+
+const int kSwerveThresh = 15;

@@ -29,7 +29,7 @@ class RobotContainer {
  private:
   // The robot's subsystems and commands are defined here...
   
-  frc::XboxController mDriverController;
+  frc::XboxController mDriverController{0};
   
   SwerveDrive mSwerveDrive;
   RunSwerve mRunSwerve;

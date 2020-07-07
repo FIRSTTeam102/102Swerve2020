@@ -26,12 +26,14 @@ class SwerveDrive : public frc2::SubsystemBase {
   void Periodic();
 
  private:
+  double angleCalc(double x, double y);
+
   frc::XboxController *mpDriverController;
 
-  SwerveWheel mWheelFL{kFLDrive, kFLTurn, kFLEncA, kFLEncB};
-  SwerveWheel mWheelFR{kFRDrive, kFRTurn, kFREncA, kFREncB};
-  SwerveWheel mWheelBR{kBRDrive, kBRTurn, kBREncA, kBREncB};
-  SwerveWheel mWheelBL{kBLDrive, kBLTurn, kBLEncA, kBLEncB};
+  SwerveWheel mWheelFL{kFLDrive, kFLTurn, kFLEncA, kFLEncB, kFLAngleScale};
+  SwerveWheel mWheelFR{kFRDrive, kFRTurn, kFREncA, kFREncB, kFRAngleScale};
+  SwerveWheel mWheelBR{kBRDrive, kBRTurn, kBREncA, kBREncB, kBRAngleScale};
+  SwerveWheel mWheelBL{kBLDrive, kBLTurn, kBLEncA, kBLEncB, kBLAngleScale};
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
 };

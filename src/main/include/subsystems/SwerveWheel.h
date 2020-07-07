@@ -11,9 +11,13 @@
 #include <frc/PWMTalonSRX.h>
 #include <frc/Encoder.h>
 
+#include "Constants.h"
+
 class SwerveWheel : public frc2::SubsystemBase {
  public:
-  SwerveWheel(int drivePort, int turnPort, int encAPort, int encBPort);
+  SwerveWheel(int drivePort, int turnPort, int encAPort, int encBPort, int angleScale);
+
+  void setAngle(double angle);
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.
@@ -24,6 +28,10 @@ class SwerveWheel : public frc2::SubsystemBase {
   frc::PWMTalonSRX mDriveMotor;
   frc::PWMTalonSRX mTurnMotor;
   frc::Encoder mEnc;
+  int mAngleScale;
+  int target;
+  int min, max;
+  int scaledPos, posCurrent;
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
 };
