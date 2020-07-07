@@ -18,6 +18,7 @@ class SwerveWheel : public frc2::SubsystemBase {
   SwerveWheel(int drivePort, int turnPort, int encAPort, int encBPort, int angleScale);
 
   void setAngle(double angle);
+  void resetEnc();
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.

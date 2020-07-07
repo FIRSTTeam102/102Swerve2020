@@ -23,6 +23,10 @@ void SwerveWheel::setAngle(double angle) {
     }
 }
 
+void SwerveWheel::resetEnc() {
+    mEnc.Reset();
+}
+
 // This method will be called once per scheduler run
 void SwerveWheel::Periodic() {
     //Keep within usable bounds

@@ -49,3 +49,8 @@ const int kBRAngleScale = 360;
 const int kBLAngleScale = 360;
 
 const int kSwerveThresh = 15;
+
+
+// Swerve Mode
+
+const int kSwerveMode = 0;

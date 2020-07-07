@@ -13,10 +13,21 @@ RunSwerve::RunSwerve() {
 }
 
 // Called when the command is initially scheduled.
-void RunSwerve::Initialize() {}
+void RunSwerve::Initialize() {
+  mpSwerveDrive.resetEncs();
+}
 
 // Called repeatedly when this Command is scheduled to run
-void RunSwerve::Execute() {}
+void RunSwerve::Execute() {
+  switch (kSwerveMode) {
+   case 0:
+    mpSwerveDrive.testSwerve();
+    return;
+   case 1:
+    mpSwerveDrive.vectorSwerve();
+    return;
+  }
+}
 
 // Called once the command ends or is interrupted.
 void RunSwerve::End(bool interrupted) {}

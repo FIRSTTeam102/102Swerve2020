@@ -30,5 +30,18 @@ double SwerveDrive::angleCalc(double x, double y) {
   return angle;
 }
 
+void SwerveDrive::testSwerve() {
+    int angle = angleCalc(mpDriverController->GetRawAxis(0), mpDriverController->GetRawAxis(1));
+    mWheelFL.setAngle(angle);
+    mWheelFR.setAngle(angle);
+    mWheelBR.setAngle(angle);
+    mWheelBL.setAngle(angle);
+}
+
+void SwerveDrive::vectorSwerve() {
+    // Yet to be added
+}
+
+
 // This method will be called once per scheduler run
 void SwerveDrive::Periodic() {}
