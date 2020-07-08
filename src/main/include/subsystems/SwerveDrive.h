@@ -36,6 +36,8 @@ class SwerveDrive : public frc2::SubsystemBase {
 
  private:
   double angleCalc(double x, double y);
+  int angle;
+  double speed;
 
   frc::XboxController *mpDriverController;
 

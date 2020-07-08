@@ -5,6 +5,8 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+#include <math.h>
+
 #include "subsystems/SwerveDrive.h"
 
 SwerveDrive::SwerveDrive() {}
@@ -30,12 +32,24 @@ double SwerveDrive::angleCalc(double x, double y) {
   return angle;
 }
 
+double SwerveDrive::pythag(double x, double y) {
+    return sqrt(pow(x, 2) + pow(y, 2));
+}
+
 void SwerveDrive::testSwerve() {
-    int angle = angleCalc(mpDriverController->GetRawAxis(0), mpDriverController->GetRawAxis(1));
+    angle = angleCalc(mpDriverController->GetRawAxis(0), mpDriverController->GetRawAxis(1));
+    printf("Set to angle: %d\n", angle);
     mWheelFL.setAngle(angle);
     mWheelFR.setAngle(angle);
     mWheelBR.setAngle(angle);
     mWheelBL.setAngle(angle);
+
+    speed = pythag(mpDriverController->GetRawAxis(0), mpDriverController->GetRawAxis(1));
+    mWheelFL.setSpeed(speed);
+    mWheelFR.setSpeed(speed);
+    mWheelBR.setSpeed(speed);
+    mWheelBL.setSpeed(speed);
+    printf("Set to speed: %f\n", speed);
 }
 
 void SwerveDrive::vectorSwerve() {
