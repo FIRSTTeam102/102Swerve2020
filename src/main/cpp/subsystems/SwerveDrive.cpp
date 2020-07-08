@@ -9,9 +9,15 @@
 
 #include "subsystems/SwerveDrive.h"
 
-SwerveDrive::SwerveDrive() {}
+SwerveDrive::SwerveDrive():
+mWheelFL{kFLDrive, kFLTurn, kFLEncA, kFLEncB, kFLAngleScale, 1},
+mWheelFR{kFRDrive, kFRTurn, kFREncA, kFREncB, kFRAngleScale, 2}, 
+mWheelBR{kBRDrive, kBRTurn, kBREncA, kBREncB, kBRAngleScale, 4},
+mWheelBL{kBLDrive, kBLTurn, kBLEncA, kBLEncB, kBLAngleScale, 3} {
 
-double SwerveDrive::angleCalc(double x, double y) {
+}
+
+double SwerveDrive::angleCalc(double x, double y){
   double angle;
   if (x == 0 && y == 0)
       return -1;
@@ -37,14 +43,16 @@ double SwerveDrive::pythag(double x, double y) {
 }
 
 void SwerveDrive::testSwerve() {
-    angle = angleCalc(mpDriverController->GetRawAxis(0), mpDriverController->GetRawAxis(1));
-    printf("Set to angle: %d\n", angle);
+    angle = angleCalc(mpDriverController->GetRawAxis(0), -mpDriverController->GetRawAxis(1));
+    printf("Set all to angle: %d\n", angle);
     mWheelFL.setAngle(angle);
     mWheelFR.setAngle(angle);
     mWheelBR.setAngle(angle);
     mWheelBL.setAngle(angle);
 
-    speed = pythag(mpDriverController->GetRawAxis(0), mpDriverController->GetRawAxis(1));
+    //speed = 0.5 * pythag(mpDriverController->GetRawAxis(0), -mpDriverController->GetRawAxis(1));
+    speed = 0.5 * mpDriverController->GetRawAxis(3) - 0.5 * mpDriverController->GetRawAxis(2);
+    //speed = 0;
     mWheelFL.setSpeed(speed);
     mWheelFR.setSpeed(speed);
     mWheelBR.setSpeed(speed);

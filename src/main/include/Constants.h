@@ -19,34 +19,34 @@
 
 // Motor Ports
 
-const int kFLDrive = 0;
+const int kFLDrive = 8;
 const int kFLTurn = 1;
-const int kFRDrive = 2;
+const int kFRDrive = 9;
 const int kFRTurn = 3;
-const int kBRDrive = 4;
-const int kBRTurn = 5;
-const int kBLDrive = 6;
-const int kBLTurn = 7;
+const int kBRDrive = 7;
+const int kBRTurn = 6;
+const int kBLDrive = 5;
+const int kBLTurn = 4;
 
 
 // Encoder Ports
 
 const int kFLEncA = 0;
 const int kFLEncB = 1;
-const int kFREncA = 2;
-const int kFREncB = 3;
+const int kFREncA = 6;
+const int kFREncB = 7;
 const int kBREncA = 4;
 const int kBREncB = 5;
-const int kBLEncA = 6;
-const int kBLEncB = 7;
+const int kBLEncA = 2;
+const int kBLEncB = 3;
 
 
 // Calibration Values
 
-const int kFLAngleScale = 360;
-const int kFRAngleScale = 360;
-const int kBRAngleScale = 360;
-const int kBLAngleScale = 360;
+const int kFLAngleScale = 393;
+const int kFRAngleScale = 395;
+const int kBRAngleScale = 382;
+const int kBLAngleScale = 384;
 
 const int kSwerveThresh = 15;
 

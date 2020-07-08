@@ -7,12 +7,12 @@
 
 #include "subsystems/SwerveWheel.h"
 
-SwerveWheel::SwerveWheel(int drivePort, int turnPort, int encAPort, int encBPort, int angleScale) : mDriveMotor{drivePort}, mTurnMotor{turnPort}, mEnc{encAPort, encBPort}, mAngleScale{angleScale} {
+SwerveWheel::SwerveWheel(int drivePort, int turnPort, int encAPort, int encBPort, int angleScale, int id = 0) : mDriveMotor{drivePort}, mTurnMotor{turnPort}, mEnc{encAPort, encBPort}, mAngleScale{angleScale}, mId{id} {
     
 }
 
 void SwerveWheel::setAngle(double angle) {
-    target = angle;
+    target = 360-angle;
     min = target - kSwerveThresh;
     if (min < 0) {
         min += mAngleScale;
@@ -27,8 +27,13 @@ void SwerveWheel::resetEnc() {
     mEnc.Reset();
 }
 
+void SwerveWheel::setSpeed(double speed) {
+    mDriveMotor.Set(speed);
+}
+
 // This method will be called once per scheduler run
 void SwerveWheel::Periodic() {
+    printf("Wheel #%d Going to: %d   At: %d\n", mId, target, scaledPos);
     //Keep within usable bounds
     if (mEnc.Get() >= mAngleScale || mEnc.Get() <= -mAngleScale) {
         mEnc.Reset();
@@ -43,7 +48,7 @@ void SwerveWheel::Periodic() {
         }
         //Implement a way to go faster direction
         else {
-            mTurnMotor.Set(0.5);
+            mTurnMotor.Set(0.3);
         }
     }
     else if (target < 180) {
@@ -52,7 +57,7 @@ void SwerveWheel::Periodic() {
         }
         //Implement a way to go faster direction
         else {
-            mTurnMotor.Set(0.5);
+            mTurnMotor.Set(0.3);
         }
     }
     else {
@@ -61,7 +66,7 @@ void SwerveWheel::Periodic() {
         }
         //Implement a way to go faster direction
         else {
-            mTurnMotor.Set(0.5);
+            mTurnMotor.Set(0.3);
         }
     }
 }

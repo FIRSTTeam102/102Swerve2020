@@ -23,7 +23,7 @@
 class RunSwerve
     : public frc2::CommandHelper<frc2::CommandBase, RunSwerve> {
  public:
-  RunSwerve();
+  RunSwerve(SwerveDrive *pSwerveDrive);
 
   void Initialize() override;
 
@@ -33,5 +33,5 @@ class RunSwerve
 
   bool IsFinished() override;
  private:
-  SwerveDrive mpSwerveDrive;
+  SwerveDrive *mpSwerveDrive;
 };

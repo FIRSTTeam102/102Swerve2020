@@ -32,7 +32,7 @@ class RobotContainer {
   frc::XboxController mDriverController{0};
   
   SwerveDrive mSwerveDrive;
-  RunSwerve mRunSwerve;
+  RunSwerve mRunSwerve{&mSwerveDrive};
 
   void ConfigureButtonBindings();
 };
