@@ -7,24 +7,25 @@
 
 #include "commands/RunSwerve.h"
 
-RunSwerve::RunSwerve() {
+RunSwerve::RunSwerve(SwerveDrive *pSwerveDrive): mpSwerveDrive{pSwerveDrive} {
   // Use addRequirements() here to declare subsystem dependencies.
-  AddRequirements(&mpSwerveDrive);
+  AddRequirements(mpSwerveDrive);
+  //RunSwerve::AddRequirements(&mpSwerveDrive);
 }
 
 // Called when the command is initially scheduled.
 void RunSwerve::Initialize() {
-  mpSwerveDrive.resetEncs();
+  mpSwerveDrive->resetEncs();
 }
 
 // Called repeatedly when this Command is scheduled to run
 void RunSwerve::Execute() {
   switch (kSwerveMode) {
    case 0:
-    mpSwerveDrive.testSwerve();
+    mpSwerveDrive->testSwerve();
     return;
    case 1:
-    mpSwerveDrive.vectorSwerve();
+    mpSwerveDrive->vectorSwerve();
     return;
   }
 }

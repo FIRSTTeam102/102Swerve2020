@@ -7,12 +7,12 @@
 
 #include "subsystems/SwerveWheel.h"
 
-SwerveWheel::SwerveWheel(int drivePort, int turnPort, int encAPort, int encBPort, int angleScale) : mDriveMotor{drivePort}, mTurnMotor{turnPort}, mEnc{encAPort, encBPort}, mAngleScale{angleScale} {
+SwerveWheel::SwerveWheel(int drivePort, int turnPort, int encAPort, int encBPort, int angleScale, int id = 0) : mDriveMotor{drivePort}, mTurnMotor{turnPort}, mEnc{encAPort, encBPort}, mAngleScale{angleScale}, mId{id} {
     
 }
 
 void SwerveWheel::setAngle(double angle) {
-    target = angle;
+    target = 360-angle;
     min = target - kSwerveThresh;
     if (min < 0) {
         min += mAngleScale;
@@ -25,7 +25,7 @@ void SwerveWheel::setAngle(double angle) {
 
 void SwerveWheel::setSpeed(double speed) {
     if (!inverted) {
-        mDriveMotor.Set(speed)
+        mDriveMotor.Set(speed);
     }
     else {
         mDriveMotor.Set(-speed);
@@ -42,6 +42,7 @@ int SwerveWheel::circScale(int i) {
 
 // This method will be called once per scheduler run
 void SwerveWheel::Periodic() {
+    printf("Wheel #%d Going to: %d   At: %d\n", mId, target, scaledPos);
     //Keep within usable bounds
     if (mEnc.Get() >= mAngleScale || mEnc.Get() <= -mAngleScale) {
         mEnc.Reset();

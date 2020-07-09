@@ -15,7 +15,7 @@
 
 class SwerveWheel : public frc2::SubsystemBase {
  public:
-  SwerveWheel(int drivePort, int turnPort, int encAPort, int encBPort, int angleScale);
+  SwerveWheel(int drivePort, int turnPort, int encAPort, int encBPort, int angleScale, int id);
 
   void setAngle(double angle);
   void setSpeed(double speed);
@@ -32,10 +32,12 @@ class SwerveWheel : public frc2::SubsystemBase {
   frc::Encoder mEnc;
   int circScale(int i);
   int mAngleScale;
-  int target, scaledTarg;
+  int target = 0;
+  int scaledTarg;
   int min, max;
   int scaledPos, posCurrent;
   bool inverted = false;
+  int mId;
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
 };
