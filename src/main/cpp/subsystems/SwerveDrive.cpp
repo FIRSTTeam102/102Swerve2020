@@ -45,7 +45,7 @@ double SwerveDrive::pythag(double x, double y) {
     return sqrt(pow(x, 2) + pow(y, 2));
 }
 
-void SwerveDrive::testSwerve() {
+void SwerveDrive::testSwerve() { // Each wheel should 
     angle = angleCalc(mpDriverController->GetRawAxis(0), -mpDriverController->GetRawAxis(1));
     printf("Set all to angle: %d\n", angle);
     mWheelFL.setAngle(angle);
@@ -63,7 +63,35 @@ void SwerveDrive::testSwerve() {
     printf("Set to speed: %f\n", speed);
 }
 
-void SwerveDrive::vectorSwerve() { //UNTESTED
+#ifdef GYRO
+int SwerveDrive::readOffset() {
+    mSerial.Read(rawOffset, 10); //Get initial value
+    while (rawOffset[0] != '~') { //Repeat until you get a valid gyro value
+        while (mSerial.GetBytesReceived() == 0); //Wait for there to be a gyro value from the arduino
+        while (mSerial.GetBytesReceived() != 0) { //Get the latest value
+            mSerial.Read(rawOffset, 10);
+        }
+    }
+    for (int i = 0; i < 10; i++) {
+        if (rawOffset[i] == '.') {
+            break;
+        }
+        else if (rawOffset[i] == '-') {
+            negativeOffset = true;
+        }
+        else {
+            offset *= 10;
+            offset += rawOffset[i] - '0';
+        }
+    }
+    return offset;
+}
+#endif
+
+void SwerveDrive::vectorSwerve() { // UNTESTED - field oriented drive (or difficult to control robot oriented when no GYRO defined)
+#ifdef GYRO
+    readOffset();
+#endif
     mDriveVector.x = mpDriverController->GetRawAxis(0);
     mDriveVector.y = -mpDriverController->GetRawAxis(1);
     mDriveVector.Rotate(360-offset); //Factor in gyroscope value (subtract from 360 to go from counterclockwise to clockwise)

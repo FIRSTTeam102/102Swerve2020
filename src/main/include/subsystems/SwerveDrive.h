@@ -43,6 +43,11 @@ class SwerveDrive : public frc2::SubsystemBase {
  private:
   double pythag(double x, double y);
   double angleCalc(double x, double y);
+  
+#ifdef GYRO
+  int readOffset();
+#endif
+
   int angle;
   double speed;
 
@@ -59,7 +64,7 @@ class SwerveDrive : public frc2::SubsystemBase {
   int targetEncoder[4];
   float targetSpeed[4], turnMagnitude[4];
   char rawOffset[10] = {0};
-  int offset;
+  int offset = 0;
   bool negativeOffset = false;
   frc::Vector2d mDriveVector;
   frc::Vector2d mTurnVector;
