@@ -50,6 +50,8 @@ const int kBLAngleScale = 384;
 
 const int kSwerveThresh = 15;
 
+const int kMaxSpeed = 0.5;
+
 
 // Swerve Mode
 

@@ -14,7 +14,10 @@ mWheelFL{kFLDrive, kFLTurn, kFLEncA, kFLEncB, kFLAngleScale, 1},
 mWheelFR{kFRDrive, kFRTurn, kFREncA, kFREncB, kFRAngleScale, 2}, 
 mWheelBR{kBRDrive, kBRTurn, kBREncA, kBREncB, kBRAngleScale, 4},
 mWheelBL{kBLDrive, kBLTurn, kBLEncA, kBLEncB, kBLAngleScale, 3} {
-
+#ifdef GYRO
+    mSerial.EnableTermination();
+    mSerial.Write("Start\n");
+#endif
 }
 
 double SwerveDrive::angleCalc(double x, double y){
@@ -60,8 +63,27 @@ void SwerveDrive::testSwerve() {
     printf("Set to speed: %f\n", speed);
 }
 
-void SwerveDrive::vectorSwerve() {
-    // Yet to be added
+void SwerveDrive::vectorSwerve() { //UNTESTED
+    mDriveVector.x = mpDriverController->GetRawAxis(0);
+    mDriveVector.y = -mpDriverController->GetRawAxis(1);
+    mDriveVector.Rotate(360-offset); //Factor in gyroscope value (subtract from 360 to go from counterclockwise to clockwise)
+    mTurnVector.x = cos((mpDriverController->GetRawAxis(0) * 45) + 45) * 57.2958; //I don't think this is gonna work but it's worth a shot
+    mTurnVector.y = sin((mpDriverController->GetRawAxis(0) * 45) + 45) * 57.2958; //^^
+    for (int i = 0; i < 4; i++) { //For each wheel:
+        mSumVector.x = (mDriveVector.x + mTurnVector.x) / 2; //Add the two vectors to get one final vector
+        mSumVector.y = (mDriveVector.y + mTurnVector.y) / 2;
+        targetEncoder[i] = angleCalc(mDriveVector.x, mDriveVector.y); //Calculate the angle of this vector
+        targetSpeed[i] = mDriveVector.Magnitude() * kMaxSpeed; //Scale the speed of the wheels
+        mTurnVector.Rotate(-90.0); //Rotate the vector clockwise 90 degrees
+    }
+    mWheelFL.setAngle(targetEncoder[0]);
+    mWheelFR.setAngle(targetEncoder[1]);
+    mWheelBR.setAngle(targetEncoder[2]);
+    mWheelBL.setAngle(targetEncoder[3]);
+    mWheelFL.setSpeed(targetSpeed[0]);
+    mWheelFR.setSpeed(targetSpeed[1]);
+    mWheelBR.setSpeed(targetSpeed[2]);
+    mWheelBL.setSpeed(targetSpeed[3]);
 }
 
 
