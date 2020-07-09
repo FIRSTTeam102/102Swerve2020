@@ -53,8 +53,8 @@ void SwerveDrive::testSwerve() {
     mWheelBR.setAngle(angle);
     mWheelBL.setAngle(angle);
 
-    //speed = 0.5 * pythag(mpDriverController->GetRawAxis(0), -mpDriverController->GetRawAxis(1));
-    speed = 0.5 * mpDriverController->GetRawAxis(3) - 0.5 * mpDriverController->GetRawAxis(2);
+    //speed = kMaxSpeed * pythag(mpDriverController->GetRawAxis(0), -mpDriverController->GetRawAxis(1));
+    speed = kMaxSpeed * mpDriverController->GetRawAxis(3) - kMaxSpeed * mpDriverController->GetRawAxis(2);
     //speed = 0;
     mWheelFL.setSpeed(speed);
     mWheelFR.setSpeed(speed);
