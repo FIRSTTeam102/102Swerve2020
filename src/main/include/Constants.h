@@ -43,14 +43,14 @@ const int kBLEncB = 3;
 
 // Calibration Values
 
-const int kFLAngleScale = 393;
-const int kFRAngleScale = 395;
-const int kBRAngleScale = 382;
-const int kBLAngleScale = 384;
+const int kFLAngleScale = 415;
+const int kFRAngleScale = 415;
+const int kBRAngleScale = 415;
+const int kBLAngleScale = 415;
 
 const int kSwerveThresh = 15;
 
-const int kMaxSpeed = 0.5;
+const double kMaxSpeed = 0.5;
 
 
 // Swerve Mode
