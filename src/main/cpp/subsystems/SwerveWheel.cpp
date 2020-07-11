@@ -23,7 +23,7 @@ void SwerveWheel::setAngle(double angle) {
     }
 }
 
-void SwerveWheel::setSpeed(double speed) {
+void SwerveWheel::setSpeed(double speed) { //Gears on the left (away from battery)
     if (!inverted) {
         mDriveMotor.Set(speed);
     }
@@ -79,11 +79,14 @@ void SwerveWheel::Periodic() {
     if (scaledTarg > 90 && scaledTarg < 270) {
 		scaledTarg += 180;
 		scaledTarg = (scaledTarg + 720) % 360;
-		inverted = !inverted;
+		inverted = true;
 	}
+    else {
+        inverted = false;
+    }
 	if (scaledTarg > 180) {
         scaledTarg -= 360;
     }
 	mTurnMotor.Set(kMaxSpeed * (double) scaledTarg / 90.0);
-    printf("Wheel #%d Going to: %d   At: %d   Speed: %d\n", mId, target, scaledPos, kMaxSpeed * (double) scaledTarg / 90.0);
+    printf("Wheel #%d Going to: %d   At: %d   Speed: %f\n", mId, target, scaledPos, kMaxSpeed * (double) scaledTarg / 90.0);
 }
