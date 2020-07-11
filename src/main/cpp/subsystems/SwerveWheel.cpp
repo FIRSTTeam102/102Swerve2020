@@ -42,14 +42,13 @@ int SwerveWheel::circScale(int i) {
 
 // This method will be called once per scheduler run
 void SwerveWheel::Periodic() {
-    printf("Wheel #%d Going to: %d   At: %d\n", mId, target, scaledPos);
     //Keep within usable bounds
     if (mEnc.Get() >= mAngleScale || mEnc.Get() <= -mAngleScale) {
         mEnc.Reset();
     }
     
     //Set wheels to target directions
-    scaledPos = (double) mEnc.Get() / (double) mAngleScale * 360.0;
+    /*scaledPos = (double) mEnc.Get() / (double) mAngleScale * 360.0;
     posCurrent = circScale(scaledPos);
     if (min < max && (posCurrent > min && posCurrent < max)) {
         mTurnMotor.Set(0);
@@ -73,5 +72,18 @@ void SwerveWheel::Periodic() {
         else {
             mTurnMotor.Set(-0.5); //counterclockwise
         }
+    }*/
+    scaledPos = (double) mEnc.Get() / (double) mAngleScale * 360.0;
+    posCurrent = circScale(scaledPos);
+    scaledTarg = circScale(target - posCurrent);
+    if (scaledTarg > 90 && scaledTarg < 270) {
+		scaledTarg += 180;
+		scaledTarg = (scaledTarg + 720) % 360;
+		inverted = !inverted;
+	}
+	if (scaledTarg > 180) {
+        scaledTarg -= 360;
     }
+	mTurnMotor.Set(kMaxSpeed * (double) scaledTarg / 90.0);
+    printf("Wheel #%d Going to: %d   At: %d   Speed: %d\n", mId, target, scaledPos, kMaxSpeed * (double) scaledTarg / 90.0);
 }
