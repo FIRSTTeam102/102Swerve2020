@@ -90,13 +90,15 @@ int SwerveDrive::readOffset() {
 
 void SwerveDrive::vectorSwerve() { // UNTESTED - field oriented drive (or difficult to control robot oriented when no GYRO defined)
 #ifdef GYRO
-    readOffset();
+    offset = readOffset();
 #endif
-    mDriveVector.x = mpDriverController->GetRawAxis(0);
-    mDriveVector.y = -mpDriverController->GetRawAxis(1);
+    mDriveVector.x = mpDriverController->GetRawAxis(4);
+    mDriveVector.y = -mpDriverController->GetRawAxis(5);
     mDriveVector.Rotate(360-offset); //Factor in gyroscope value (subtract from 360 to go from counterclockwise to clockwise)
-    mTurnVector.x = cos((mpDriverController->GetRawAxis(0) * 45) + 45) * 57.2958; //I don't think this is gonna work but it's worth a shot
-    mTurnVector.y = sin((mpDriverController->GetRawAxis(0) * 45) + 45) * 57.2958; //^^
+    //mTurnVector.x = cos((mpDriverController->GetRawAxis(0) * 45) + 45) * 57.2958; //I don't think this is gonna work but it's worth a shot
+    //mTurnVector.y = sin((mpDriverController->GetRawAxis(0) * 45) + 45) * 57.2958; //No it isnt
+    mTurnVector.x = mpDriverController->GetRawAxis(0);
+    mTurnVector.y = mpDriverController->GetRawAxis(0);
     for (int i = 0; i < 4; i++) { //For each wheel:
         mSumVector.x = (mDriveVector.x + mTurnVector.x) / 2; //Add the two vectors to get one final vector
         mSumVector.y = (mDriveVector.y + mTurnVector.y) / 2;
