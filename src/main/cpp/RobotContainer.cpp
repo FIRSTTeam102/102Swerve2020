@@ -12,6 +12,8 @@ RobotContainer::RobotContainer() {
   mSwerveDrive.SetDefaultCommand(std::move(mRunSwerve));
   mSwerveDrive.setController(&mDriverController);
 
+  mEncFile = fopen("deploy/values.txt", "w+");
+
   // Configure the button bindings
   ConfigureButtonBindings();
 }

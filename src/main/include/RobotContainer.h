@@ -12,6 +12,8 @@
 
 #include "commands/RunSwerve.h"
 #include "subsystems/SwerveDrive.h"
+#include "commands/ReadEncoders.h"
+#include "commands/WriteEncoders.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -33,6 +35,9 @@ class RobotContainer {
   
   SwerveDrive mSwerveDrive;
   RunSwerve mRunSwerve{&mSwerveDrive};
+
+  ReadEncoders mReadEncoders{};
+  ReadEncoders mWriteEncoders{};
 
   void ConfigureButtonBindings();
 };
