@@ -66,16 +66,21 @@ void SwerveDrive::testSwerve() { // Each wheel should
 #ifdef GYRO
 int SwerveDrive::readOffset() {
     offset = 0;
+    negativeOffset = false;
+    mSerial.Write("\n");
     mSerial.Read(rawOffset, 10); //Get initial value
     while (rawOffset[0] != '~') { //Repeat until you get a valid gyro value
-        mSerial.Write("\n");
+        //mSerial.Write("\n");
         while (mSerial.GetBytesReceived() == 0) {
-            mSerial.Write("\n");
+            //mSerial.Write("\n");
         } //Wait for there to be a gyro value from the arduino
         while (mSerial.GetBytesReceived() != 0) { //Get the latest value
             mSerial.Read(rawOffset, 10);
             printf("%s\n", rawOffset);
         }
+    }
+    while (mSerial.GetBytesReceived() != 0) { //Get the latest value
+        mSerial.Read(rawOffset, 10);
     }
     printf("Gyro says: %s\n", rawOffset);
     for (int i = 1; i < 10; i++) {
@@ -90,11 +95,14 @@ int SwerveDrive::readOffset() {
             offset += rawOffset[i] - '0';
         }
     }
+    if (!negativeOffset) { // The gyro is the opposite direction so we usually have to flip it
+        offset = -offset;
+    }
     return offset;
 }
 #endif
 
-void SwerveDrive::vectorSwerve() { // UNTESTED - field oriented drive (or difficult to control robot oriented when no GYRO defined)
+void SwerveDrive::vectorSwerve() {
 #ifdef GYRO
     offset = readOffset();
     printf("Gyro reading: %d\n", offset);

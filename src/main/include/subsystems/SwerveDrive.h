@@ -7,7 +7,7 @@
 
 #pragma once
 
-//#define GYRO
+#define GYRO
 
 #include <math.h>
 
