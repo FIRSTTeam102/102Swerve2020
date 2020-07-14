@@ -20,6 +20,7 @@ void RunSwerve::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void RunSwerve::Execute() {
+  printf("yeet\n");
   switch (kSwerveMode) {
    case 0:
     mpSwerveDrive->testSwerve();

@@ -55,4 +55,4 @@ const double kMaxSpeed = 0.5;
 
 // Swerve Mode
 
-const int kSwerveMode = 0;
+const int kSwerveMode = 1;

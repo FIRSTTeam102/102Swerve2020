@@ -65,14 +65,20 @@ void SwerveDrive::testSwerve() { // Each wheel should
 
 #ifdef GYRO
 int SwerveDrive::readOffset() {
+    offset = 0;
     mSerial.Read(rawOffset, 10); //Get initial value
     while (rawOffset[0] != '~') { //Repeat until you get a valid gyro value
-        while (mSerial.GetBytesReceived() == 0); //Wait for there to be a gyro value from the arduino
+        mSerial.Write("\n");
+        while (mSerial.GetBytesReceived() == 0) {
+            mSerial.Write("\n");
+        } //Wait for there to be a gyro value from the arduino
         while (mSerial.GetBytesReceived() != 0) { //Get the latest value
             mSerial.Read(rawOffset, 10);
+            printf("%s\n", rawOffset);
         }
     }
-    for (int i = 0; i < 10; i++) {
+    printf("Gyro says: %s\n", rawOffset);
+    for (int i = 1; i < 10; i++) {
         if (rawOffset[i] == '.') {
             break;
         }
@@ -91,6 +97,7 @@ int SwerveDrive::readOffset() {
 void SwerveDrive::vectorSwerve() { // UNTESTED - field oriented drive (or difficult to control robot oriented when no GYRO defined)
 #ifdef GYRO
     offset = readOffset();
+    printf("Gyro reading: %d\n", offset);
 #endif
     mDriveVector.x = mpDriverController->GetRawAxis(4);
     mDriveVector.y = -mpDriverController->GetRawAxis(5);
@@ -99,11 +106,13 @@ void SwerveDrive::vectorSwerve() { // UNTESTED - field oriented drive (or diffic
     //mTurnVector.y = sin((mpDriverController->GetRawAxis(0) * 45) + 45) * 57.2958; //No it isnt
     mTurnVector.x = mpDriverController->GetRawAxis(0);
     mTurnVector.y = mpDriverController->GetRawAxis(0);
+    printf("Turn speed: %f\n",mTurnVector.x);
     for (int i = 0; i < 4; i++) { //For each wheel:
         mSumVector.x = (mDriveVector.x + mTurnVector.x) / 2; //Add the two vectors to get one final vector
         mSumVector.y = (mDriveVector.y + mTurnVector.y) / 2;
-        targetEncoder[i] = angleCalc(mDriveVector.x, mDriveVector.y); //Calculate the angle of this vector
-        targetSpeed[i] = mDriveVector.Magnitude() * kMaxSpeed; //Scale the speed of the wheels
+        targetEncoder[i] = angleCalc(mSumVector.x, mSumVector.y); //Calculate the angle of this vector
+        targetSpeed[i] = mSumVector.Magnitude() * kMaxSpeed; //Scale the speed of the wheels
+        //targetSpeed[i] = kMaxSpeed * mpDriverController->GetRawAxis(3) - kMaxSpeed * mpDriverController->GetRawAxis(2);
         mTurnVector.Rotate(-90.0); //Rotate the vector clockwise 90 degrees
     }
     mWheelFL.setAngle(targetEncoder[0]);
