@@ -7,7 +7,11 @@
 
 #pragma once
 
+//Use Field Oriented Drive with the Gyro Sensor
 #define GYRO
+
+//Ignore turn vectors to drive motors at full speed
+//#define LIGHTSPEED
 
 #include <math.h>
 
