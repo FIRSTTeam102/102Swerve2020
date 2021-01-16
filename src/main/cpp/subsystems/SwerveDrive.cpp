@@ -82,7 +82,7 @@ int SwerveDrive::readOffset() {
     while (mSerial.GetBytesReceived() != 0) { //Get the latest value
         mSerial.Read(rawOffset, 10);
     }
-    printf("Gyro says: %s\n", rawOffset);
+    //printf("Gyro says: %s\n", rawOffset);
     for (int i = 1; i < 10; i++) {
         if (rawOffset[i] == '.') {
             break;
@@ -105,7 +105,9 @@ int SwerveDrive::readOffset() {
 void SwerveDrive::vectorSwerve() {
 #ifdef GYRO
     offset = readOffset();
-    printf("Gyro reading: %d\n", offset);
+    //printf("Gyro reading: %d\n", offset);
+#else
+    offset = 0;
 #endif
     mDriveVector.x = mpDriverController->GetRawAxis(4);
     mDriveVector.y = -mpDriverController->GetRawAxis(5);
@@ -114,10 +116,15 @@ void SwerveDrive::vectorSwerve() {
     //mTurnVector.y = sin((mpDriverController->GetRawAxis(0) * 45) + 45) * 57.2958; //No it isnt
     mTurnVector.x = mpDriverController->GetRawAxis(0);
     mTurnVector.y = mpDriverController->GetRawAxis(0);
-    printf("Turn speed: %f\n",mTurnVector.x);
+    //printf("Turn speed: %f\n",mTurnVector.x);
     for (int i = 0; i < 4; i++) { //For each wheel:
+    #ifdef LIGHTSPEED
+        mSumVector.x = mDriveVector.x;
+        mSumVector.y = mDriveVector.y;
+    #else
         mSumVector.x = (mDriveVector.x + mTurnVector.x) / 2; //Add the two vectors to get one final vector
         mSumVector.y = (mDriveVector.y + mTurnVector.y) / 2;
+    #endif
         targetEncoder[i] = angleCalc(mSumVector.x, mSumVector.y); //Calculate the angle of this vector
         targetSpeed[i] = mSumVector.Magnitude() * kMaxSpeed; //Scale the speed of the wheels
         //targetSpeed[i] = kMaxSpeed * mpDriverController->GetRawAxis(3) - kMaxSpeed * mpDriverController->GetRawAxis(2);
