@@ -44,7 +44,7 @@ const int kFROffset = 3603;
 const int kBROffset = 44;
 const int kBLOffset = 3466;
 
-const double kMaxSpeed = 0.5;
+const double kMaxSpeed = 1;
 
 
 // Swerve Mode
