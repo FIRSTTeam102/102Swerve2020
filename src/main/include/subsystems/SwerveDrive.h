@@ -25,12 +25,6 @@ class SwerveDrive : public frc2::SubsystemBase {
   void setController(frc::XboxController *pDriverController) {
     mpDriverController = pDriverController;
   }
-  void resetEncs() {
-    mWheelFL.resetEnc();
-    mWheelFR.resetEnc();
-    mWheelBR.resetEnc();
-    mWheelBL.resetEnc();
-  }
 
   void testSwerve();
   void vectorSwerve();

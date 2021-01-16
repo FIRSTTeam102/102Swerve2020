@@ -31,24 +31,18 @@ const int kBLTurn = 4;
 
 // Encoder Ports
 
-const int kFLEncA = 0;
-const int kFLEncB = 1;
-const int kFREncA = 6;
-const int kFREncB = 7;
-const int kBREncA = 4;
-const int kBREncB = 5;
-const int kBLEncA = 2;
-const int kBLEncB = 3;
+const int kFLEnc = 2;
+const int kFREnc = 3;
+const int kBREnc = 1;
+const int kBLEnc = 0;
 
 
 // Calibration Values
 
-const int kFLAngleScale = 415;
-const int kFRAngleScale = 415;
-const int kBRAngleScale = 415;
-const int kBLAngleScale = 415;
-
-const int kSwerveThresh = 15;
+const int kFLOffset = 2618;
+const int kFROffset = 3603;
+const int kBROffset = 44;
+const int kBLOffset = 3466;
 
 const double kMaxSpeed = 0.5;
 

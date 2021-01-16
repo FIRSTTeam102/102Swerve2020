@@ -9,13 +9,13 @@
 
 #include <frc2/command/SubsystemBase.h>
 #include <frc/PWMTalonSRX.h>
-#include <frc/Encoder.h>
+#include <frc/AnalogInput.h>
 
 #include "Constants.h"
 
 class SwerveWheel : public frc2::SubsystemBase {
  public:
-  SwerveWheel(int drivePort, int turnPort, int encAPort, int encBPort, int angleScale, int id);
+  SwerveWheel(int drivePort, int turnPort, int encPort, int encOffset, int id);
 
   void setAngle(double angle);
   void setSpeed(double speed);
@@ -29,12 +29,11 @@ class SwerveWheel : public frc2::SubsystemBase {
  private:
   frc::PWMTalonSRX mDriveMotor;
   frc::PWMTalonSRX mTurnMotor;
-  frc::Encoder mEnc;
+  frc::AnalogInput mEnc;
   int circScale(int i);
-  int mAngleScale;
+  int mAngleOffset;
   int target = 0;
   int scaledTarg;
-  int min, max;
   int scaledPos, posCurrent;
   bool inverted = false;
   int mId;

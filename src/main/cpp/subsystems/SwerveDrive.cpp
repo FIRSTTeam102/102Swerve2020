@@ -10,10 +10,10 @@
 #include "subsystems/SwerveDrive.h"
 
 SwerveDrive::SwerveDrive():
-mWheelFL{kFLDrive, kFLTurn, kFLEncA, kFLEncB, kFLAngleScale, 1},
-mWheelFR{kFRDrive, kFRTurn, kFREncA, kFREncB, kFRAngleScale, 2}, 
-mWheelBR{kBRDrive, kBRTurn, kBREncA, kBREncB, kBRAngleScale, 4},
-mWheelBL{kBLDrive, kBLTurn, kBLEncA, kBLEncB, kBLAngleScale, 3} {
+mWheelFL{kFLDrive, kFLTurn, kFLEnc, kFLOffset, 1},
+mWheelFR{kFRDrive, kFRTurn, kFREnc, kFROffset, 2}, 
+mWheelBR{kBRDrive, kBRTurn, kBREnc, kBROffset, 4},
+mWheelBL{kBLDrive, kBLTurn, kBLEnc, kBLOffset, 3} {
 #ifdef GYRO
     mSerial.EnableTermination();
     mSerial.Write("Start\n");

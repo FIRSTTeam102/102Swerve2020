@@ -15,7 +15,6 @@ RunSwerve::RunSwerve(SwerveDrive *pSwerveDrive): mpSwerveDrive{pSwerveDrive} {
 
 // Called when the command is initially scheduled.
 void RunSwerve::Initialize() {
-  mpSwerveDrive->resetEncs();
 }
 
 // Called repeatedly when this Command is scheduled to run
