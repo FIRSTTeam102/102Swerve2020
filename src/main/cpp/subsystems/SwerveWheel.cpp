@@ -35,7 +35,7 @@ void SwerveWheel::Periodic() {
     scaledTarg = circScale(target - posCurrent);
     if (scaledTarg > 90 && scaledTarg < 270) {
 		scaledTarg += 180;
-		scaledTarg = (scaledTarg + 720) % 360;
+		scaledTarg = circScale(scaledTarg);
 		inverted = true;
 	}
     else {
